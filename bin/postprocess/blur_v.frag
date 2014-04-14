@@ -17,7 +17,7 @@ void main()
     blur += textureOffset(Render, texcoord, ivec2(0, -6)) * weights[1];
     blur += textureOffset(Render, texcoord, ivec2(0, -4)) * weights[2];
     blur += textureOffset(Render, texcoord, ivec2(0, -2)) * weights[3];
-    blur += texture2D(Render, texcoord) * weights[4];
+    blur += texture2D(Render, vec2(gl_TexCoord[0])) * weights[4];
     blur += textureOffset(Render, texcoord, ivec2(0, 2)) * weights[3];
     blur += textureOffset(Render, texcoord, ivec2(0, 4)) * weights[2];
     blur += textureOffset(Render, texcoord, ivec2(0, 6)) * weights[1];

@@ -3,6 +3,8 @@
 
 #include <irrlicht.h>
 
+#define IRRPP_VERSION 0.1
+
 #include "IQuadSceneNode.h"
 #include "CPostProcessingEffect.h"
 #include "CPostProcessingEffectChain.h"
