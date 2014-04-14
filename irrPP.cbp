@@ -29,6 +29,7 @@
 				<Compiler>
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-O3" />
+					<Add directory="$(#irrlicht.include)" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -43,6 +44,7 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Compiler>
+					<Add option="-g" />
 					<Add directory="$(#irrlicht.include)" />
 					<Add directory="include" />
 				</Compiler>
@@ -70,6 +72,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="bin/postprocess/antialias.frag" />
+		<Unit filename="bin/postprocess/bloom_prepass.frag" />
+		<Unit filename="bin/postprocess/blur_h.frag" />
+		<Unit filename="bin/postprocess/blur_h_add.frag" />
+		<Unit filename="bin/postprocess/blur_v.frag" />
+		<Unit filename="bin/postprocess/coldcolors.frag" />
+		<Unit filename="bin/postprocess/fog.frag" />
+		<Unit filename="bin/postprocess/fxaa.frag" />
+		<Unit filename="bin/postprocess/iseered.frag" />
+		<Unit filename="bin/postprocess/quad.vert" />
+		<Unit filename="bin/postprocess/warmcolors.frag" />
 		<Unit filename="include/CPostProcessingEffect.h">
 			<Option target="Debug" />
 			<Option target="Release" />

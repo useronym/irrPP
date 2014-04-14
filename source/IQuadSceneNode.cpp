@@ -5,8 +5,6 @@
 
 irr::scene::IQuadSceneNode::IQuadSceneNode(irr::scene::ISceneNode* parent, irr::scene::ISceneManager* mgr, irr::s32 id) : irr::scene::ISceneNode(parent, mgr)
 {
-    //remove();
-
     Buffer = new irr::scene::SMeshBuffer;
     Buffer->Vertices.push_back(irr::video::S3DVertex(
                                    irr::core::vector3df(-1.0, 1.0, 0.0),
@@ -32,7 +30,6 @@ irr::scene::IQuadSceneNode::IQuadSceneNode(irr::scene::ISceneNode* parent, irr::
     Buffer->Indices.push_back(0);
     Buffer->Indices.push_back(2);
     Buffer->recalculateBoundingBox();
-    //setScale(irr::core::vector3df(20,20,20));
     updateAbsolutePosition();
     Material.ZBuffer = false;
     Material.ZWriteEnable = false;

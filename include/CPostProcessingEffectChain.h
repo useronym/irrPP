@@ -88,9 +88,9 @@ class CPostProcessingEffectChain
 
         /**
          * Set to true in order for the chain to preserve it's original input render. The render will be available from irr::video::CPostProcessingEffect::getOriginalRender.
-         * @param k true to keep, false frees the render texture if there was one created with true before
+         * @param keep true to keep, false frees the render texture if there was one created with true before
          */
-        void setKeepOriginalRender(bool k);
+        void setKeepOriginalRender(bool keep);
         /**
          * Returns whether the original render is being kept inside this chain.
          * @return True if yes.

@@ -24,7 +24,7 @@ namespace irr
  * @param shaderDir directory which holds shader source files, relative to the executable
  * @return New instance of irrPP
  */
-irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, const irr::io::path shaderDir= "postprocess/");
+irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, const irr::io::path shaderDir = "postprocess/");
 
 namespace irr
 {
@@ -37,7 +37,7 @@ class irrPP
         irrPP(irr::IrrlichtDevice* device, const irr::io::path shaderDir);
         ~irrPP();
 
-        void render(irr::video::ITexture* texture);
+        void render(irr::video::ITexture* input, irr::video::ITexture* output = 0);
 
         /**
          * Creates a new post-processing effect chain.
@@ -70,6 +70,8 @@ class irrPP
 
         irr::video::ITexture* getRTT2() const;
 
+        //irr::video::ITe
+
         irr::u32 getActiveEffectCount() const;
 
         /**
@@ -85,6 +87,15 @@ class irrPP
         irr::video::ITexture* RTT1, *RTT2;
         irr::scene::IQuadSceneNode* Quad;
         irr::core::array<irr::video::CPostProcessingEffectChain*> Chains;
+
+
+        struct EffectEntry
+        {
+            irr::video::CPostProcessingEffect* effect;
+            irr::video::ITexture* source;
+            irr::video::ITexture* target;
+            bool keepSource;
+        };
 };
 
 }

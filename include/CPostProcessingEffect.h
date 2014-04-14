@@ -65,7 +65,7 @@ class CPostProcessingEffect
 
         /**
          * Adds a new texture which should be passed to the shader of this effect.
-         * @param tex texture to pass to the shader
+         * @param tex pointer to the texture to pass to the shader
          */
         void addTextureToShader(irr::video::ITexture* tex);
         /**

@@ -14,6 +14,8 @@ enum E_POSTPROCESSING_EFFECT
 {
     //! You see red.
     EPE_I_SEE_RED = 0,
+    //! Does nothing.
+    EPE_ALBEDO,
 
     //! FXAA antialiasing
     EPE_FXAA,

@@ -15,11 +15,11 @@ irr::video::CPostProcessingEffectChain::CPostProcessingEffectChain(irr::Irrlicht
 
 irr::video::CPostProcessingEffectChain::~CPostProcessingEffectChain()
 {
-    /*if(OriginalRender)
+    if(OriginalRender)
     {
-        Video->removeTexture(OriginalRender);
+        Device->getVideoDriver()->removeTexture(OriginalRender);
         OriginalRender = 0;
-    }*/
+    }
 }
 
 irr::u32 irr::video::CPostProcessingEffectChain::attachEffect(irr::video::CPostProcessingEffect* effect)
@@ -57,6 +57,10 @@ irr::video::CPostProcessingEffect* irr::video::CPostProcessingEffectChain::creat
     {
         case EPE_I_SEE_RED:
             shaderSource = readShader("iseered.frag");
+            break;
+
+        case EPE_ALBEDO:
+            shaderSource = readShader("albedo.frag");
             break;
 
         case EPE_FXAA:
@@ -124,18 +128,21 @@ void irr::video::CPostProcessingEffectChain::removeEffect(irr::video::CPostProce
 }
 
 
-void irr::video::CPostProcessingEffectChain::setKeepOriginalRender(bool k)
+void irr::video::CPostProcessingEffectChain::setKeepOriginalRender(bool keep)
 {
-    /*if(k && !getKeepOriginalRender())
+    irr::video::IVideoDriver* video = Device->getVideoDriver();
+
+    if (keep && !getKeepOriginalRender())
     {
-        irr::core::dimension2du dimension= Video->getCurrentRenderTargetSize();
-        OriginalRender = Video->addRenderTargetTexture(dimension, "Chain-original-texture" + Video->getTextureCount());
+        irr::core::stringc originalName = "irrPP-Chain-";
+        originalName += *(int*)this;
+        OriginalRender = video->addRenderTargetTexture(video->getCurrentRenderTargetSize(), originalName.c_str());
     }
-    else if(!k && getKeepOriginalRender())
+    else if (!keep && getKeepOriginalRender())
     {
-        Video->removeTexture(OriginalRender);
+        video->removeTexture(OriginalRender);
         OriginalRender = 0;
-    }*/
+    }
 }
 
 bool irr::video::CPostProcessingEffectChain::getKeepOriginalRender() const
