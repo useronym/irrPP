@@ -45,7 +45,7 @@ int main()
         driver->beginScene(true, true, video::SColor(255,100,101,140));
 
         //! at the beginning of each render loop, we'll set the render target texture we created as the render target
-        //! but since irrPP created 2 RTT's anywaydx, we can just use any one of those instead:
+        //! but since irrPP created 2 RTT's anyway, we can just use any one of those instead:
         driver->setRenderTarget(pp->getRTT2());
 
         device->getSceneManager()->drawAll();
@@ -87,7 +87,7 @@ void createScene(IrrlichtDevice *device)
     terrain->setMaterialTexture(1,
             driver->getTexture("media/detailmap3.jpg"));
     terrain->setMaterialType(video::EMT_DETAIL_MAP);
-    terrain->scaleTexture(1.0f, 20.0f);
+    terrain->scaleTexture(1.0f, 40.0f);
 
     scene::ICameraSceneNode* cam = smgr->addCameraSceneNodeFPS(0, 100.0, 1.0);
     cam->setFarValue(8000);

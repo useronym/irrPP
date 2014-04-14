@@ -51,7 +51,7 @@ void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture
             {
                 if (thisChain->getEffectFromIndex(effect)->isActive())
                 {
-                    freeRTT = (usedRTT == RTT1 ? RTT2 : RTT1);
+                    freeRTT = (usedRTT == RTT2 ? RTT1 : RTT2);
 
                     orderedEffects[effectCounter].effect = thisChain->getEffectFromIndex(effect);
                     orderedEffects[effectCounter].source = usedRTT;

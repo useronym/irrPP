@@ -158,6 +158,10 @@ irr::video::ITexture* irr::video::CPostProcessingEffectChain::getOriginalRender(
 void irr::video::CPostProcessingEffectChain::requestActiveEffectUpdate()
 {
     ActiveEffectCount = 0;
+
+    if (!isActive())
+        return;
+
     for(irr::u32 i = 0; i < Effects.size(); i++)
     {
         if(Effects[i]->isActive()) ActiveEffectCount++;
@@ -193,16 +197,12 @@ irr::u32 irr::video::CPostProcessingEffectChain::getEffectIndex(irr::video::CPos
 
 void irr::video::CPostProcessingEffectChain::setActive(bool active)
 {
-    Active= active;
+    Active = active;
+    requestActiveEffectUpdate();
 }
 
 bool irr::video::CPostProcessingEffectChain::isActive()
 {
-    if(getActiveEffectCount() == 0)
-    {
-        setActive(false);
-    }
-
     return Active;
 }
 
