@@ -178,6 +178,10 @@ irr::core::stringc irr::video::irrPP::getDebugString() const
                     out += "#";
                     out += counter;
                     out += "\t";
+
+                    out += thisEffect->getName();
+                    out += "\t\t";
+
                     out += thisEffect->getQualityResolution().Width;
                     out += "x";
                     out += thisEffect->getQualityResolution().Height;

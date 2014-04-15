@@ -37,7 +37,7 @@ int main()
     bloom->createEffect(video::EPE_BLUR_V)->setQuality(video::EPQ_QUARTER);
     // blur horizontally
     bloom->createEffect(video::EPE_BLUR_H)->setQuality(video::EPQ_QUARTER);
-    // add the blur into the original render
+    // add the blur onto the original render
     bloom->createEffect(video::EPE_ADD2)->addTextureToShader(bloom->getOriginalRender());
 
 

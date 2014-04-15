@@ -72,6 +72,10 @@ class CPostProcessingEffect
          */
         bool isActive() const;
 
+        void setName(irr::core::stringc name);
+
+        irr::core::stringc getName() const;
+
 
         void setQuality(irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality);
 
@@ -115,6 +119,7 @@ class CPostProcessingEffect
         irr::IrrlichtDevice* Device;
         irr::video::CPostProcessingEffectChain* Chain;
 
+        irr::core::stringc Name;
         bool Active;
         irr::video::E_MATERIAL_TYPE MaterialType;
         irr::video::IShaderConstantSetCallBack* Callback;

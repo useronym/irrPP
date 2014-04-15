@@ -7,6 +7,7 @@
 irr::video::CPostProcessingEffect::CPostProcessingEffect(irr::IrrlichtDevice* device, irr::core::stringc sourceV, irr::core::stringc sourceF, irr::video::IShaderConstantSetCallBack* callback)
     :Device(device),
     Chain(0),
+    Name(""),
     Active(true),
     Callback(callback),
     Quality(irr::video::EPQ_FULL),
@@ -78,6 +79,17 @@ bool irr::video::CPostProcessingEffect::isActive() const
 {
     return Active;
 }
+
+void irr::video::CPostProcessingEffect::setName(irr::core::stringc name)
+{
+    Name = name;
+}
+
+irr::core::stringc irr::video::CPostProcessingEffect::getName() const
+{
+    return Name;
+}
+
 
 void irr::video::CPostProcessingEffect::setQuality(irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality)
 {

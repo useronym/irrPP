@@ -41,8 +41,6 @@ irr::u32 irr::video::CPostProcessingEffectChain::attachEffect(irr::video::CPostP
 
 irr::video::CPostProcessingEffect* irr::video::CPostProcessingEffectChain::createEffect(irr::core::stringc sourceFrag, irr::video::IShaderConstantSetCallBack* callback)
 {
-    //Device->getLogger()->log("compile shader", shader.Name.c_str(), irr::ELL_INFORMATION);
-
     CPostProcessingEffect* effect = new CPostProcessingEffect(Device, sourceFrag, readShader("quad.vert"), callback);
     attachEffect(effect);
 
@@ -51,54 +49,67 @@ irr::video::CPostProcessingEffect* irr::video::CPostProcessingEffectChain::creat
 
 irr::video::CPostProcessingEffect* irr::video::CPostProcessingEffectChain::createEffect(irr::video::E_POSTPROCESSING_EFFECT type)
 {
-    irr::core::stringc shaderSource;
+    irr::core::stringc shaderSource, effectName;
 
     switch(type)
     {
         case EPE_I_SEE_RED:
             shaderSource = readShader("iseered.frag");
+            effectName = "garhh";
             break;
 
         case EPE_ALBEDO:
             shaderSource = readShader("albedo.frag");
+            effectName = "albedo";
             break;
 
         case EPE_ADD2:
             shaderSource = readShader("add2.frag");
+            effectName = "add2";
             break;
 
         case EPE_FXAA:
             shaderSource = readShader("fxaa.frag");
+            effectName = "fxaa";
             break;
 
         case EPE_BLOOM_PREPASS:
             shaderSource = readShader("bloom_prepass.frag");
+            effectName = "bloom_prepass";
             break;
 
         case EPE_BLUR_V:
             shaderSource = readShader("blur_v.frag");
+            effectName = "blur_v";
             break;
 
         case EPE_BLUR_H:
             shaderSource = readShader("blur_h.frag");
+            effectName = "blur_h";
             break;
 
         case EPE_BLUR_H_ADD:
             shaderSource = readShader("blur_h_add.frag");
+            effectName = "blur_h_add";
             break;
 
         case EPE_COLD_COLORS:
             shaderSource = readShader("coldcolors.frag");
+            effectName = "coldcolors";
             break;
 
         case EPE_WARM_COLORS:
             shaderSource = readShader("warmcolors.frag");
+            effectName = "warmcolors";
             break;
 
         default: return 0; //this should never happen
     }
 
-    return createEffect(shaderSource);
+    irr::video::CPostProcessingEffect* newEff = createEffect(shaderSource);
+    newEff->setName(effectName);
+
+    return newEff;
 }
 
 
