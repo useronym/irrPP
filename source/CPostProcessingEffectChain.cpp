@@ -63,6 +63,10 @@ irr::video::CPostProcessingEffect* irr::video::CPostProcessingEffectChain::creat
             shaderSource = readShader("albedo.frag");
             break;
 
+        case EPE_ADD2:
+            shaderSource = readShader("add2.frag");
+            break;
+
         case EPE_FXAA:
             shaderSource = readShader("fxaa.frag");
             break;

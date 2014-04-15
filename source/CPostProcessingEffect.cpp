@@ -8,7 +8,9 @@ irr::video::CPostProcessingEffect::CPostProcessingEffect(irr::IrrlichtDevice* de
     :Device(device),
     Chain(0),
     Active(true),
-    Callback(callback)
+    Callback(callback),
+    Quality(irr::video::EPQ_FULL),
+    CustomRTT(0)
 {
     MaterialType= (irr::video::E_MATERIAL_TYPE) Device->getVideoDriver()->getGPUProgrammingServices()->addHighLevelShaderMaterial(
                                                     sourceF.c_str(), "main", irr::video::EVST_VS_2_0,
@@ -77,4 +79,70 @@ bool irr::video::CPostProcessingEffect::isActive() const
     return Active;
 }
 
+void irr::video::CPostProcessingEffect::setQuality(irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality)
+{
+    irr::core::dimension2d<irr::u32> fullRes = Device->getVideoDriver()->getCurrentRenderTargetSize();
+    irr::core::dimension2d<irr::u32> qRes;
 
+    switch (quality)
+    {
+    case EPQ_FULL:
+        if (CustomRTT)
+        {
+            Device->getVideoDriver()->removeTexture(CustomRTT);
+            CustomRTT = 0;
+        }
+        Quality = EPQ_FULL;
+        return;
+
+    case EPQ_HALF:
+        qRes = fullRes / 2;
+        break;
+
+    case EPQ_QUARTER:
+        qRes = fullRes / 4;
+        break;
+
+    case EPQ_OCTOPUS:
+        qRes = fullRes / 8;
+        break;
+
+    case EPQ_CUSTOM:
+        Device->getLogger()->log("irrPP", "Attempted to set quality to 'custom' with an enum", irr::ELL_ERROR);
+        Device->getLogger()->log("irrPP", "Set with the custom resolution instead", irr::ELL_ERROR);
+        return;
+    }
+
+    CustomRTT = Device->getVideoDriver()->addRenderTargetTexture(qRes);
+    Quality = quality;
+}
+
+void irr::video::CPostProcessingEffect::setQuality(irr::core::dimension2d<irr::u32> resolution)
+{
+    if (CustomRTT)
+    {
+        Device->getVideoDriver()->removeTexture(CustomRTT);
+        CustomRTT = 0;
+    }
+
+    CustomRTT = Device->getVideoDriver()->addRenderTargetTexture(resolution);
+    Quality = EPQ_CUSTOM;
+}
+
+irr::video::E_POSTPROCESSING_EFFECT_QUALITY irr::video::CPostProcessingEffect::getQuality() const
+{
+    return Quality;
+}
+
+irr::core::dimension2d<irr::u32> irr::video::CPostProcessingEffect::getQualityResolution() const
+{
+    if (CustomRTT)
+        return CustomRTT->getSize();
+    else
+        return Device->getVideoDriver()->getCurrentRenderTargetSize();
+}
+
+irr::video::ITexture* irr::video::CPostProcessingEffect::getCustomRTT() const
+{
+    return CustomRTT;
+}

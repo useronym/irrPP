@@ -16,6 +16,8 @@ enum E_POSTPROCESSING_EFFECT
     EPE_I_SEE_RED = 0,
     //! Does nothing.
     EPE_ALBEDO,
+    //! Adds the input render to another texture
+    EPE_ADD2,
 
     //! FXAA antialiasing
     EPE_FXAA,

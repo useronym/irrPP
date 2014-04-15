@@ -51,12 +51,26 @@ void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture
             {
                 if (thisChain->getEffectFromIndex(effect)->isActive())
                 {
+                    irr::video::CPostProcessingEffect* thisEffect = thisChain->getEffectFromIndex(effect);
                     freeRTT = (usedRTT == RTT2 ? RTT1 : RTT2);
 
-                    orderedEffects[effectCounter].effect = thisChain->getEffectFromIndex(effect);
+                    orderedEffects[effectCounter].effect = thisEffect;
                     orderedEffects[effectCounter].source = usedRTT;
                     orderedEffects[effectCounter].target = freeRTT;
+                    usedRTT = freeRTT;
 
+                    // handle 'downscale your RTT' feature
+                    if (thisEffect->getQuality() != irr::video::EPQ_FULL)
+                    {
+                        orderedEffects[effectCounter].target = thisEffect->getCustomRTT();
+                        usedRTT = thisEffect->getCustomRTT();
+                    }
+                    /*if (orderedEffects[effectCounter - 1].effect->getQuality() != EPQ_FULL)
+                    {
+                        orderedEffects[effectCounter].source =
+                    }*/
+
+                    // handle 'keep original render' feature
                     if (shouldveKeptLastRender && effectCounter > 0)
                     {
                         orderedEffects[effectCounter - 1].target = thisChain->getOriginalRender();
@@ -65,7 +79,6 @@ void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture
                         shouldveKeptLastRender = false;
                     }
 
-                    usedRTT = freeRTT;
                     effectCounter++;
                 }
             }
@@ -78,7 +91,7 @@ void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture
         if (i < numActiveEffects - 1)
             Device->getVideoDriver()->setRenderTarget(orderedEffects[i].target);
         else // last effect
-            Device->getVideoDriver()->setRenderTarget(0);
+            Device->getVideoDriver()->setRenderTarget(output);
 
         Quad->setMaterialType(orderedEffects[i].effect->getMaterialType());
         Quad->setMaterialTexture(0, orderedEffects[i].source);
@@ -139,4 +152,42 @@ irr::u32 irr::video::irrPP::getActiveEffectCount() const
 irr::video::CPostProcessingEffectChain* irr::video::irrPP::getRootPostProcessingEffectChain() const
 {
     return Chains[0];
+}
+
+irr::core::stringc irr::video::irrPP::getDebugString() const
+{
+    irr::core::stringc out;
+    out += "Active effects: ";
+    out += getActiveEffectCount();
+    out += "\n";
+
+    irr::u32 counter = 0, numChains = Chains.size();
+    for (irr::u32 chain = 0; chain < numChains; chain++)
+    {
+        if (Chains[chain]->isActive())
+        {
+            irr::video::CPostProcessingEffectChain* thisChain = Chains[chain];
+            irr::u32 numChainEffects = thisChain->getEffectCount();
+
+            for (irr::u32 effect = 0; effect < numChainEffects; effect++)
+            {
+                if (thisChain->getEffectFromIndex(effect)->isActive())
+                {
+                    irr::video::CPostProcessingEffect* thisEffect = thisChain->getEffectFromIndex(effect);
+
+                    out += "#";
+                    out += counter;
+                    out += "\t";
+                    out += thisEffect->getQualityResolution().Width;
+                    out += "x";
+                    out += thisEffect->getQualityResolution().Height;
+                    out += "\n";
+
+                    counter++;
+                }
+            }
+        }
+    }
+
+    return out;
 }

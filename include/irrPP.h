@@ -62,17 +62,9 @@ class irrPP
          */
         irr::video::CPostProcessingEffect* createEffect(irr::video::E_POSTPROCESSING_EFFECT type);
 
-        /**
-         * Enables/Disables post processing
-         * @param enable enable or disable post processing
-         */
-        //void enablePostProcessing(bool enable, irr::video::ECOLOR_FORMAT format= irr::video::ECF_A8R8G8B8);
-
         irr::video::ITexture* getRTT1() const;
 
         irr::video::ITexture* getRTT2() const;
-
-        //irr::video::ITe
 
         irr::u32 getActiveEffectCount() const;
 
@@ -81,6 +73,8 @@ class irrPP
          * @return Pointer to the root post-processing effect chain.
          */
         irr::video::CPostProcessingEffectChain* getRootPostProcessingEffectChain() const;
+
+        core::stringc getDebugString() const;
 
     private:
         irr::IrrlichtDevice* Device;

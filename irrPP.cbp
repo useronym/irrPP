@@ -72,6 +72,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="bin/postprocess/add2.frag" />
 		<Unit filename="bin/postprocess/antialias.frag" />
 		<Unit filename="bin/postprocess/bloom_prepass.frag" />
 		<Unit filename="bin/postprocess/blur_h.frag" />

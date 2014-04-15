@@ -17,6 +17,15 @@ namespace video
 
 class CPostProcessingEffectChain;
 
+enum E_POSTPROCESSING_EFFECT_QUALITY
+{
+    EPQ_FULL = 0,
+    EPQ_HALF,
+    EPQ_QUARTER,
+    EPQ_OCTOPUS,
+    EPQ_CUSTOM
+};
+
 //! A post processing effect.
 /**
  * These are created either with irr::video::CRenderer or irr::video::CPostProcessingEffectChain.
@@ -63,6 +72,18 @@ class CPostProcessingEffect
          */
         bool isActive() const;
 
+
+        void setQuality(irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality);
+
+        void setQuality(irr::core::dimension2d<irr::u32> resolution);
+
+        irr::video::E_POSTPROCESSING_EFFECT_QUALITY getQuality() const;
+
+        irr::core::dimension2d<irr::u32> getQualityResolution() const;
+
+        irr::video::ITexture* getCustomRTT() const;
+
+
         /**
          * Adds a new texture which should be passed to the shader of this effect.
          * @param tex pointer to the texture to pass to the shader
@@ -97,6 +118,10 @@ class CPostProcessingEffect
         bool Active;
         irr::video::E_MATERIAL_TYPE MaterialType;
         irr::video::IShaderConstantSetCallBack* Callback;
+
+        irr::video::E_POSTPROCESSING_EFFECT_QUALITY Quality;
+        irr::video::ITexture* CustomRTT;
+
         irr::core::array<irr::video::ITexture*> TexturesToPass;
 };
 

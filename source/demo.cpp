@@ -31,10 +31,17 @@ int main()
 
     irr::video::CPostProcessingEffectChain* bloom = pp->createEffectChain();
     bloom->setKeepOriginalRender(true);
-    bloom->createEffect(video::EPE_BLOOM_PREPASS); // only let bright areas of the image through
-    bloom->createEffect(video::EPE_BLUR_V); // blur them vertically
-    bloom->createEffect(video::EPE_BLUR_H_ADD)->addTextureToShader(bloom->getOriginalRender()); // blur horizontally and add to the original render
+    // only let bright areas of the image through
+    bloom->createEffect(video::EPE_BLOOM_PREPASS)->setQuality(video::EPQ_QUARTER);
+    // blur them vertically
+    bloom->createEffect(video::EPE_BLUR_V)->setQuality(video::EPQ_QUARTER);
+    // blur horizontally
+    bloom->createEffect(video::EPE_BLUR_H)->setQuality(video::EPQ_QUARTER);
+    // add the blur into the original render
+    bloom->createEffect(video::EPE_ADD2)->addTextureToShader(bloom->getOriginalRender());
 
+
+    device->getLogger()->log(pp->getDebugString().c_str());
 
     //! this is how we would create the render target texture.
     //! since we're lazy, we won't do that - it's not really necessary, which will become clear shortly
