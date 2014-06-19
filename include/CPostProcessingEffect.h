@@ -19,10 +19,10 @@ class CPostProcessingEffectChain;
 
 enum E_POSTPROCESSING_EFFECT_QUALITY
 {
-    EPQ_FULL = 0,
-    EPQ_HALF,
-    EPQ_QUARTER,
-    EPQ_OCTOPUS,
+    EPQ_FULL = 1,
+    EPQ_HALF = 2,
+    EPQ_QUARTER = 4,
+    EPQ_OCTOPUS = 8,
     EPQ_CUSTOM
 };
 
