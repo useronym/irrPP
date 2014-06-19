@@ -23,10 +23,11 @@ namespace irr
 //! Use this function to create a new instance of irrPP
 /**
  * @param device irrlicht device to use
+ * @param quality default quality of an effect, the RTT1 and RTT2 textuters are created at this quality
  * @param shaderDir directory which holds shader source files, relative to the executable
  * @return New instance of irrPP
  */
-irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, const irr::io::path shaderDir = "postprocess/");
+irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, const irr::io::path shaderDir = "postprocess/");
 
 namespace irr
 {
@@ -36,7 +37,7 @@ namespace video
 class irrPP
 {
     public:
-        irrPP(irr::IrrlichtDevice* device, const irr::io::path shaderDir);
+        irrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, const irr::io::path shaderDir);
         ~irrPP();
 
         void render(irr::video::ITexture* input, irr::video::ITexture* output = 0);
@@ -78,6 +79,7 @@ class irrPP
 
     private:
         irr::IrrlichtDevice* Device;
+        const irr::video::E_POSTPROCESSING_EFFECT_QUALITY Quality;
         irr::io::path ShaderDir;
 
         irr::video::ITexture* RTT1, *RTT2;

@@ -1,22 +1,25 @@
 #include "irrPP.h"
 
-irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, const irr::io::path shaderDir)
+irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, const irr::io::path shaderDir)
 {
-    return new irr::video::irrPP(device, shaderDir);
+    return new irr::video::irrPP(device, quality, shaderDir);
 }
 
 
 
-irr::video::irrPP::irrPP(irr::IrrlichtDevice* device, const irr::io::path shaderDir)
+irr::video::irrPP::irrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, const irr::io::path shaderDir)
     :Device(device),
-     ShaderDir(shaderDir)
+    Quality(quality),
+    ShaderDir(shaderDir)
 {
     Quad = new irr::scene::IQuadSceneNode(0, Device->getSceneManager());
     // create the root chain
     createEffectChain();
 
-    RTT1 = Device->getVideoDriver()->addRenderTargetTexture(Device->getVideoDriver()->getCurrentRenderTargetSize(),"irrPP-RTT1");
-    RTT2 = Device->getVideoDriver()->addRenderTargetTexture(Device->getVideoDriver()->getCurrentRenderTargetSize(), "irrPP-RTT2");
+    irr::core::dimension2d<u32> texSize = Device->getVideoDriver()->getCurrentRenderTargetSize() /  (irr::f32)Quality;
+
+    RTT1 = Device->getVideoDriver()->addRenderTargetTexture(texSize, "irrPP-RTT1");
+    RTT2 = Device->getVideoDriver()->addRenderTargetTexture(texSize, "irrPP-RTT2");
 }
 
 irr::video::irrPP::~irrPP()
