@@ -107,6 +107,7 @@
 				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DDEBUG_GLES" />
 					<Add directory="../irrlicht-ogl-es/include" />
 					<Add directory="include" />
 				</Compiler>

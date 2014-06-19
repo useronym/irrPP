@@ -35,6 +35,8 @@ irr::scene::IQuadSceneNode::IQuadSceneNode(irr::scene::ISceneNode* parent, irr::
     updateAbsolutePosition();
     Material.ZBuffer = false;
     Material.ZWriteEnable = false;
+    Material.TextureLayer[0].TextureWrapU = irr::video::ETC_CLAMP_TO_EDGE;
+    Material.TextureLayer[0].TextureWrapV = irr::video::ETC_CLAMP_TO_EDGE;
 }
 
 irr::scene::IQuadSceneNode::~IQuadSceneNode()
