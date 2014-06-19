@@ -7,10 +7,32 @@ void createScene(IrrlichtDevice *device);
 
 int main()
 {
-    IrrlichtDevice *device = createDevice(video::EDT_OPENGL, core::dimension2d<u32>(800, 600), 32);
+    IrrlichtDevice* device = 0;
+    video::irrPP* pp = 0;
+
+    #ifdef DEBUG_GLES
+    SIrrlichtCreationParameters param;
+    param.DriverType = video::EDT_OGLES2;
+    param.WindowSize = core::dimension2d<u32>(800, 600);
+    param.OGLES2ShaderPath = "media/shaders/";
+    param.Bits = 32;
+    device = createDeviceEx(param);
 
     if (!device)
         return 1;
+
+    //! initialize irrPP
+    pp = createIrrPP(device, video::EPQ_QUARTER, "postprocess-gles/");
+
+    #else
+    device = createDevice(video::EDT_OPENGL, core::dimension2d<u32>(800, 600), 32);
+
+    if (!device)
+        return 1;
+
+    //! initialize irrPP
+    pp = createIrrPP(device);
+    #endif
 
     video::IVideoDriver* driver = device->getVideoDriver();
     device->setWindowCaption(L"irrPP Demo");
@@ -18,18 +40,16 @@ int main()
     // create a scene
     createScene(device);
 
-    //! we'll need to render our scene into a texture, then let irrPP post-process it.
-    //! initialize irrPP
-    video::irrPP* pp = createIrrPP(device);
 
     //pp->createEffect(video::EPE_COLD_COLORS);
-    pp->createEffect(video::EPE_FXAA);
-    //pp->createEffect(video::EPE_BLUR_V);
-    //pp->createEffect(video::EPE_BLUR_H);
+    //pp->createEffect(video::EPE_FXAA);
+    pp->createEffect(video::EPE_BLUR_H);
+    pp->createEffect(video::EPE_BLUR_V);
+    pp->createEffect(video::EPE_ALBEDO);
 
     //pp->createEffect(video::EPE_ALBEDO);
 
-    irr::video::CPostProcessingEffectChain* bloom = pp->createEffectChain();
+    /*irr::video::CPostProcessingEffectChain* bloom = pp->createEffectChain();
     bloom->setKeepOriginalRender(true);
     // only let bright areas of the image through
     bloom->createEffect(video::EPE_BLOOM_PREPASS)->setQuality(video::EPQ_QUARTER);
@@ -38,7 +58,7 @@ int main()
     // blur horizontally
     bloom->createEffect(video::EPE_BLUR_H)->setQuality(video::EPQ_QUARTER);
     // add the blur onto the original render
-    bloom->createEffect(video::EPE_ADD2)->addTextureToShader(bloom->getOriginalRender());
+    bloom->createEffect(video::EPE_ADD2)->addTextureToShader(bloom->getOriginalRender());*/
 
 
     device->getLogger()->log(pp->getDebugString().c_str());
@@ -90,9 +110,9 @@ void createScene(IrrlichtDevice *device)
 
     terrain->setMaterialFlag(video::EMF_LIGHTING, false);
     terrain->setMaterialTexture(0,
-            driver->getTexture("media/terrain-texture.jpg"));
+            driver->getTexture("media/terrain-texture.png"));
     terrain->setMaterialTexture(1,
-            driver->getTexture("media/detailmap3.jpg"));
+            driver->getTexture("media/detailmap3.png"));
     terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 40.0f);
 
