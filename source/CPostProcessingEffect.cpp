@@ -4,13 +4,14 @@
 #include "CPostProcessingEffect.h"
 #include "CPostProcessingEffectChain.h"
 
-irr::video::CPostProcessingEffect::CPostProcessingEffect(irr::IrrlichtDevice* device, irr::core::stringc sourceV, irr::core::stringc sourceF, irr::video::IShaderConstantSetCallBack* callback)
+irr::video::CPostProcessingEffect::CPostProcessingEffect(irr::IrrlichtDevice* device, irr::core::stringc sourceV, irr::core::stringc sourceF,
+                                                         irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, irr::video::IShaderConstantSetCallBack* callback)
     :Device(device),
     Chain(0),
     Name(""),
     Active(true),
     Callback(callback),
-    Quality(irr::video::EPQ_FULL),
+    Quality(quality),
     CustomRTT(0)
 {
     MaterialType= (irr::video::E_MATERIAL_TYPE) Device->getVideoDriver()->getGPUProgrammingServices()->addHighLevelShaderMaterial(
@@ -93,37 +94,15 @@ irr::core::stringc irr::video::CPostProcessingEffect::getName() const
 
 void irr::video::CPostProcessingEffect::setQuality(irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality)
 {
-    irr::core::dimension2d<irr::u32> fullRes = Device->getVideoDriver()->getCurrentRenderTargetSize();
-    irr::core::dimension2d<irr::u32> qRes;
-
-    switch (quality)
+    if (quality == EPQ_CUSTOM)
     {
-    case EPQ_FULL:
-        if (CustomRTT)
-        {
-            Device->getVideoDriver()->removeTexture(CustomRTT);
-            CustomRTT = 0;
-        }
-        Quality = EPQ_FULL;
-        return;
-
-    case EPQ_HALF:
-        qRes = fullRes / 2;
-        break;
-
-    case EPQ_QUARTER:
-        qRes = fullRes / 4;
-        break;
-
-    case EPQ_OCTOPUS:
-        qRes = fullRes / 8;
-        break;
-
-    case EPQ_CUSTOM:
         Device->getLogger()->log("irrPP", "Attempted to set quality to 'custom' with an enum", irr::ELL_ERROR);
         Device->getLogger()->log("irrPP", "Set with the custom resolution instead", irr::ELL_ERROR);
         return;
     }
+
+    irr::core::dimension2d<irr::u32> fullRes = Device->getVideoDriver()->getCurrentRenderTargetSize();
+    irr::core::dimension2d<irr::u32> qRes = fullRes / (irr::u32)quality;
 
     CustomRTT = Device->getVideoDriver()->addRenderTargetTexture(qRes);
     Quality = quality;
@@ -151,7 +130,7 @@ irr::core::dimension2d<irr::u32> irr::video::CPostProcessingEffect::getQualityRe
     if (CustomRTT)
         return CustomRTT->getSize();
     else
-        return Device->getVideoDriver()->getCurrentRenderTargetSize();
+        return Device->getVideoDriver()->getCurrentRenderTargetSize() / Quality;
 }
 
 irr::video::ITexture* irr::video::CPostProcessingEffect::getCustomRTT() const

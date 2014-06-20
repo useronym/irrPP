@@ -63,15 +63,11 @@ void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture
                     usedRTT = freeRTT;
 
                     // handle 'downscale your RTT' feature
-                    if (thisEffect->getQuality() != irr::video::EPQ_FULL)
+                    if (thisEffect->getQuality() != Quality)
                     {
                         orderedEffects[effectCounter].target = thisEffect->getCustomRTT();
                         usedRTT = thisEffect->getCustomRTT();
                     }
-                    /*if (orderedEffects[effectCounter - 1].effect->getQuality() != EPQ_FULL)
-                    {
-                        orderedEffects[effectCounter].source =
-                    }*/
 
                     // handle 'keep original render' feature
                     if (shouldveKeptLastRender && effectCounter > 0)
@@ -113,7 +109,7 @@ void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture
 
 irr::video::CPostProcessingEffectChain* irr::video::irrPP::createEffectChain()
 {
-    irr::video::CPostProcessingEffectChain* chain = new irr::video::CPostProcessingEffectChain(Device, ShaderDir);
+    irr::video::CPostProcessingEffectChain* chain = new irr::video::CPostProcessingEffectChain(Device, Quality, ShaderDir);
     Chains.push_back(chain);
 
     return chain;

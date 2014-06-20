@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
 
 
     //pp->createEffect(video::EPE_COLD_COLORS);
-    //pp->createEffect(video::EPE_FXAA);
+    /*video::CPostProcessingEffect* fxaa = pp->createEffect(video::EPE_FXAA);
+    fxaa->setQuality(video::EPQ_FULL);*/
     pp->createEffect(video::EPE_BLUR_H);
     pp->createEffect(video::EPE_BLUR_V);
     pp->createEffect(video::EPE_ALBEDO);
@@ -111,6 +112,9 @@ int main(int argc, char *argv[])
         //! then, the  final result would be rendered into that texture. something like this:
         //! pp->render(rt, rt);
         //! should therefore work as well, provided there are at least two active effects :)
+
+        device->getGUIEnvironment()->getSkin()->getFont()->draw(core::stringw(core::stringw("FPS: ") + core::stringw(driver->getFPS())).c_str(),
+                                                                core::rect<s32>(10, 10, 50, 30), video::SColor(255, 255, 255, 255));
 
         driver->endScene();
     }

@@ -3,8 +3,9 @@
 
 #include "CPostProcessingEffectChain.h"
 
-irr::video::CPostProcessingEffectChain::CPostProcessingEffectChain(irr::IrrlichtDevice* device, irr::io::path shaderDir)
+irr::video::CPostProcessingEffectChain::CPostProcessingEffectChain(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY defQuality, irr::io::path shaderDir)
     :Device(device),
+    DefaultQuality(defQuality),
     ShaderDir(shaderDir),
     Active(false),
     ActiveEffectCount(0),
@@ -41,7 +42,7 @@ irr::u32 irr::video::CPostProcessingEffectChain::attachEffect(irr::video::CPostP
 
 irr::video::CPostProcessingEffect* irr::video::CPostProcessingEffectChain::createEffect(irr::core::stringc sourceFrag, irr::video::IShaderConstantSetCallBack* callback)
 {
-    CPostProcessingEffect* effect = new CPostProcessingEffect(Device, sourceFrag, readShader("quad.vert"), callback);
+    CPostProcessingEffect* effect = new CPostProcessingEffect(Device, sourceFrag, readShader("quad.vert"), DefaultQuality, callback);
     attachEffect(effect);
 
     return effect;

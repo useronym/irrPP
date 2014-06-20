@@ -27,7 +27,7 @@ class CPostProcessingEffectChain
          * Constructor, only used internally.
          * @param renderer renderer this chain belongs to
          */
-        CPostProcessingEffectChain(irr::IrrlichtDevice* device, irr::io::path shaderDir);
+        CPostProcessingEffectChain(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY defQuality, irr::io::path shaderDir);
         /**
          * Destructor.
          */
@@ -132,8 +132,8 @@ class CPostProcessingEffectChain
     private:
         irr::core::stringc readShader(irr::io::path filename) const;
 
-        //irr::video::irrPP* IrrPP;
         irr::IrrlichtDevice* Device;
+        irr::video::E_POSTPROCESSING_EFFECT_QUALITY DefaultQuality;
         irr::io::path ShaderDir;
 
         bool Active;

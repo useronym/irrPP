@@ -39,7 +39,8 @@ class CPostProcessingEffect
          * @param shaderSource GLSL source code
          * @param callback pointer to a callback which should be used, if any
          */
-        CPostProcessingEffect(irr::IrrlichtDevice* device, irr::core::stringc sourceV, irr::core::stringc sourceF, irr::video::IShaderConstantSetCallBack* callback);
+        CPostProcessingEffect(irr::IrrlichtDevice* device, irr::core::stringc sourceV, irr::core::stringc sourceF,
+                              irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, irr::video::IShaderConstantSetCallBack* callback);
 
         /**
          * Destructor.
