@@ -27,7 +27,7 @@ namespace irr
  * @param shaderDir directory which holds shader source files, relative to the executable
  * @return New instance of irrPP
  */
-irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, const irr::io::path shaderDir = "postprocess/");
+irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality = irr::video::EPQ_FULL, const irr::io::path shaderDir = "postprocess/");
 
 namespace irr
 {

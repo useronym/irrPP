@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="lib/debug/irrPP" prefix_auto="1" extension_auto="1" />
+				<Option output="lib/win32-gcc/debug/irrPP" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="obj/Debug/" />
 				<Option type="2" />
@@ -20,7 +20,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="lib/release/irrPP" prefix_auto="1" extension_auto="1" />
+				<Option output="lib/win32-gcc/release/irrPP" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
 				<Option object_output="obj/Release/" />
 				<Option type="2" />
@@ -30,6 +30,36 @@
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-O3" />
 					<Add directory="$(#irrlicht.include)" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Linux-Debug">
+				<Option output="lib/linux/debug/irrPP" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../irrlicht-ogl-es/include" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Linux-Release">
+				<Option output="lib/linux/release/irrPP" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add directory="../irrlicht-ogl-es/include" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -68,37 +98,7 @@
 					<Add library="lib/win32-gcc/release/libirrPP.a" />
 				</Linker>
 			</Target>
-			<Target title="GLES-Debug">
-				<Option output="lib/debug/irrPP" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="" />
-				<Option object_output="obj/Debug/" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Option createDefFile="1" />
-				<Compiler>
-					<Add option="-g" />
-					<Add directory="../irrlicht-ogl-es/include" />
-					<Add directory="include" />
-				</Compiler>
-			</Target>
-			<Target title="GLES-Release">
-				<Option output="lib/release/irrPP" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="" />
-				<Option object_output="obj/Release/" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Option createDefFile="1" />
-				<Compiler>
-					<Add option="-fexpensive-optimizations" />
-					<Add option="-O3" />
-					<Add directory="../irrlicht-ogl-es/include" />
-					<Add directory="include" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-			<Target title="GLES-Demo-Debug">
+			<Target title="Demo-GLES-Debug">
 				<Option output="bin/irrPP" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin" />
 				<Option object_output="obj/demo/" />
@@ -113,7 +113,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="../irrlicht-ogl-es/lib/Linux/libIrrlicht.a" />
-					<Add library="lib/debug/libirrPP.a" />
+					<Add library="lib/linux/debug/libirrPP.a" />
 					<Add library="Xxf86vm" />
 					<Add library="X11" />
 					<Add library="EGL" />
@@ -150,76 +150,76 @@
 		<Unit filename="bin/postprocess/iseered.frag" />
 		<Unit filename="bin/postprocess/quad.vert" />
 		<Unit filename="bin/postprocess/warmcolors.frag" />
+		<Unit filename="demo/demo.cpp">
+			<Option target="Demo-Debug" />
+			<Option target="Demo-Release" />
+			<Option target="Demo-GLES-Debug" />
+		</Unit>
 		<Unit filename="include/CPostProcessingEffect.h">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="include/CPostProcessingEffectChain.h">
 			<Option target="Release" />
 			<Option target="Debug" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="include/E_POST_PROCESSING_EFFECT.h">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="include/IQuadSceneNode.h">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="include/IShaderDefaultPostProcessCallback.h">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="include/irrPP.h">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="source/CPostProcessingEffect.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="source/CPostProcessingEffectChain.cpp">
 			<Option target="Release" />
 			<Option target="Debug" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="source/IQuadSceneNode.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="source/IShaderDefaultPostProcessCallback.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
-		</Unit>
-		<Unit filename="source/demo.cpp">
-			<Option target="Demo-Release" />
-			<Option target="Demo-Debug" />
-			<Option target="GLES-Demo-Debug" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Unit filename="source/irrPP.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
-			<Option target="GLES-Debug" />
-			<Option target="GLES-Release" />
+			<Option target="Linux-Debug" />
+			<Option target="Linux-Release" />
 		</Unit>
 		<Extensions>
 			<code_completion />
