@@ -1,3 +1,7 @@
+#ifdef _IRR_ANDROID_PLATFORM_
+#include <android_native_app_glue.h>
+#endif
+
 #include <irrlicht.h>
 #include <irrPP.h>
 
@@ -5,30 +9,52 @@ using namespace irr;
 
 void createScene(IrrlichtDevice *device);
 
-int main()
+#ifdef _IRR_ANDROID_PLATFORM_
+void android_main(android_app* app)
+#else
+int main(int argc, char *argv[])
+#endif
 {
     IrrlichtDevice* device = 0;
     video::irrPP* pp = 0;
 
-    #ifdef DEBUG_GLES
+    #ifdef DEBUG_GLES // init for linux GLES
     SIrrlichtCreationParameters param;
     param.DriverType = video::EDT_OGLES2;
     param.WindowSize = core::dimension2d<u32>(800, 600);
-    param.OGLES2ShaderPath = "media/shaders/";
+    param.OGLES2ShaderPath = "../demo/assets/media/shaders/";
     param.Bits = 32;
     device = createDeviceEx(param);
 
     if (!device)
         return 1;
 
+    device->getFileSystem()->changeWorkingDirectoryTo(device->getFileSystem()->getAbsolutePath("../demo/assets/"));
+
     //! initialize irrPP
     pp = createIrrPP(device, video::EPQ_QUARTER, "postprocess-gles/");
 
-    #else
+    #elif _IRR_ANDROID_PLATFORM_ // init for Android
+    app_dummy();
+
+    SIrrlichtCreationParameters param;
+    param.PrivateData = app;
+    param.DriverType = video::EDT_OGLES2;
+    param.WindowSize = core::dimension2d<u32>(0, 0);
+    param.OGLES2ShaderPath = "media/shaders/";
+    param.Bits = 24;
+    param.ZBufferBits = 16;
+    device = createDeviceEx(param);
+
+    //! initialize irrPP
+    pp = createIrrPP(device, video::EPQ_QUARTER, "postprocess-gles/");
+    #else // init for windows (does this even work anymore..? )
     device = createDevice(video::EDT_OPENGL, core::dimension2d<u32>(800, 600), 32);
 
     if (!device)
         return 1;
+
+    device->getFileSystem()->changeWorkingDirectoryTo(device->getFileSystem()->getAbsolutePath("../demo/assets/"));
 
     //! initialize irrPP
     pp = createIrrPP(device);
@@ -116,11 +142,12 @@ void createScene(IrrlichtDevice *device)
     terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 40.0f);
 
-    scene::ICameraSceneNode* cam = smgr->addCameraSceneNodeFPS(0, 100.0, 1.0);
+    scene::ICameraSceneNode* cam = smgr->addCameraSceneNode();//FPS(0, 100.0, 1.0);
     cam->setFarValue(8000);
-    cam->setPosition(core::vector3df(5000, 1000, 5000));
+    cam->setTarget(core::vector3df(5000, 1000, 5000));
+    cam->addAnimator(smgr->createFlyCircleAnimator(core::vector3df(5000, 1500, 5000), 1000, 0.0002));
 
     scene::ISceneNode* cube = smgr->addCubeSceneNode(200);
     cube->setMaterialFlag(video::EMF_LIGHTING, false);
-    cube->setPosition(cam->getPosition());
+    cube->setPosition(core::vector3df(5000, 1000, 5000));
 }
