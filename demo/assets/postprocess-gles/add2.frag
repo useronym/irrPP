@@ -1,10 +1,11 @@
-#version 140
+precision mediump float;
 
 uniform sampler2D Render;
 uniform sampler2D Tex0;
 
+varying vec2 TexCoord;
+
 void main()
 {
-    vec2 texCoord = vec2(gl_TexCoord[0]);
-    gl_FragColor = texture2D(Render, texCoord) + texture2D(Tex0, texCoord);
+    gl_FragColor = texture2D(Render, TexCoord) + texture2D(Tex0, TexCoord);
 }

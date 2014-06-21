@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
 
     //! initialize irrPP
     pp = createIrrPP(device, video::EPQ_QUARTER, "postprocess-gles/");
+
     #else // init for windows (does this even work anymore..? )
     device = createDevice(video::EDT_OPENGL, core::dimension2d<u32>(800, 600), 32);
 
