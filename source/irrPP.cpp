@@ -10,16 +10,14 @@ irr::video::irrPP* createIrrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPR
 irr::video::irrPP::irrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality, const irr::io::path shaderDir)
     :Device(device),
     Quality(quality),
-    ShaderDir(shaderDir)
+    ShaderDir(shaderDir),
+    RTT1(0), RTT2(0)
 {
     Quad = new irr::scene::IQuadSceneNode(0, Device->getSceneManager());
     // create the root chain
     createEffectChain();
 
-    irr::core::dimension2d<u32> texSize = Device->getVideoDriver()->getCurrentRenderTargetSize() /  (irr::f32)Quality;
-
-    RTT1 = Device->getVideoDriver()->addRenderTargetTexture(texSize, "irrPP-RTT1");
-    RTT2 = Device->getVideoDriver()->addRenderTargetTexture(texSize, "irrPP-RTT2");
+    setQuality(quality);
 }
 
 irr::video::irrPP::~irrPP()
@@ -117,12 +115,43 @@ irr::video::CPostProcessingEffectChain* irr::video::irrPP::createEffectChain()
 
 irr::video::CPostProcessingEffect* irr::video::irrPP::createEffect(irr::core::stringc sourceFrag, irr::video::IShaderConstantSetCallBack* callback)
 {
-    return getRootPostProcessingEffectChain()->createEffect(sourceFrag, callback);
+    return getRootEffectChain()->createEffect(sourceFrag, callback);
 }
 
 irr::video::CPostProcessingEffect* irr::video::irrPP::createEffect(irr::video::E_POSTPROCESSING_EFFECT type)
 {
-    return getRootPostProcessingEffectChain()->createEffect(type);
+    return getRootEffectChain()->createEffect(type);
+}
+
+void irr::video::irrPP::setQuality(irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality)
+{
+    irr::core::dimension2d<irr::u32> fullRes = Device->getVideoDriver()->getCurrentRenderTargetSize();
+    irr::core::dimension2d<irr::u32> qRes = fullRes / (irr::u32)quality;
+
+    if (RTT1)
+        Device->getVideoDriver()->removeTexture(RTT1);
+
+    if (RTT2)
+        Device->getVideoDriver()->removeTexture(RTT2);
+
+    RTT1 = Device->getVideoDriver()->addRenderTargetTexture(qRes, "irrPP-RTT1");
+    RTT2 = Device->getVideoDriver()->addRenderTargetTexture(qRes, "irrPP-RTT2");
+
+    Quality = quality;
+}
+
+void irr::video::irrPP::setQuality(irr::core::dimension2d<irr::u32> resolution)
+{
+    if (RTT1)
+        Device->getVideoDriver()->removeTexture(RTT1);
+
+    if (RTT2)
+        Device->getVideoDriver()->removeTexture(RTT2);
+
+    RTT1 = Device->getVideoDriver()->addRenderTargetTexture(resolution, "irrPP-RTT1");
+    RTT2 = Device->getVideoDriver()->addRenderTargetTexture(resolution, "irrPP-RTT2");
+
+    Quality = EPQ_CUSTOM;
 }
 
 irr::video::ITexture* irr::video::irrPP::getRTT1() const
@@ -148,9 +177,14 @@ irr::u32 irr::video::irrPP::getActiveEffectCount() const
     return count;
 }
 
-irr::video::CPostProcessingEffectChain* irr::video::irrPP::getRootPostProcessingEffectChain() const
+irr::video::CPostProcessingEffectChain* irr::video::irrPP::getRootEffectChain() const
 {
     return Chains[0];
+}
+
+irr::scene::IQuadSceneNode* irr::video::irrPP::getQuadNode() const
+{
+    return Quad;
 }
 
 irr::core::stringc irr::video::irrPP::getDebugString() const

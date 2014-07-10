@@ -17,7 +17,7 @@ irr::video::CPostProcessingEffect::CPostProcessingEffect(irr::IrrlichtDevice* de
     MaterialType= (irr::video::E_MATERIAL_TYPE) Device->getVideoDriver()->getGPUProgrammingServices()->addHighLevelShaderMaterial(
                                                     sourceF.c_str(), "main", irr::video::EVST_VS_2_0,
                                                     sourceV.c_str(), "main", irr::video::EPST_PS_2_0,
-                                                    callback);
+                                                    callback);//, irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 }
 
 irr::video::CPostProcessingEffect::~CPostProcessingEffect()

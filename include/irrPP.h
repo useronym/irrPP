@@ -63,6 +63,10 @@ class irrPP
          */
         irr::video::CPostProcessingEffect* createEffect(irr::video::E_POSTPROCESSING_EFFECT type);
 
+        void setQuality(irr::video::E_POSTPROCESSING_EFFECT_QUALITY quality);
+
+        void setQuality(irr::core::dimension2d<irr::u32> resolution);
+
         irr::video::ITexture* getRTT1() const;
 
         irr::video::ITexture* getRTT2() const;
@@ -73,13 +77,15 @@ class irrPP
          * Returns the root post-processing effect chain. Effects which don't belong to a specific chain are managed by a "root" chain.
          * @return Pointer to the root post-processing effect chain.
          */
-        irr::video::CPostProcessingEffectChain* getRootPostProcessingEffectChain() const;
+        irr::video::CPostProcessingEffectChain* getRootEffectChain() const;
+
+        irr::scene::IQuadSceneNode* getQuadNode() const;
 
         core::stringc getDebugString() const;
 
     private:
         irr::IrrlichtDevice* Device;
-        const irr::video::E_POSTPROCESSING_EFFECT_QUALITY Quality;
+        irr::video::E_POSTPROCESSING_EFFECT_QUALITY Quality;
         irr::io::path ShaderDir;
 
         irr::video::ITexture* RTT1, *RTT2;

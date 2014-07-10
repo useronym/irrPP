@@ -129,8 +129,9 @@ class CPostProcessingEffectChain
          */
         irr::u32 getEffectIndex(irr::video::CPostProcessingEffect* effect) const;
 
-    private:
         irr::core::stringc readShader(irr::io::path filename) const;
+
+    private:
 
         irr::IrrlichtDevice* Device;
         irr::video::E_POSTPROCESSING_EFFECT_QUALITY DefaultQuality;
