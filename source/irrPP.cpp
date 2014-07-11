@@ -61,7 +61,7 @@ void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture
                     usedRTT = freeRTT;
 
                     // handle 'downscale your RTT' feature
-                    if (thisEffect->getQuality() != Quality)
+                    if (thisEffect->getCustomRTT())
                     {
                         orderedEffects[effectCounter].target = thisEffect->getCustomRTT();
                         usedRTT = thisEffect->getCustomRTT();
