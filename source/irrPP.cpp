@@ -215,9 +215,19 @@ irr::core::stringc irr::video::irrPP::getDebugString() const
                     out += thisEffect->getName();
                     out += "\t\t";
 
-                    out += thisEffect->getQualityResolution().Width;
-                    out += "x";
-                    out += thisEffect->getQualityResolution().Height;
+                    if (thisEffect->getCustomRTT())
+                    {
+                        out += thisEffect->getCustomRTT()->getSize().Width;
+                        out += "x";
+                        out += thisEffect->getCustomRTT()->getSize().Height;
+                    }
+                    else
+                    {
+                        out += RTT1->getSize().Width;
+                        out += "x";
+                        out += RTT1->getSize().Height;
+                    }
+
                     out += "\n";
 
                     counter++;

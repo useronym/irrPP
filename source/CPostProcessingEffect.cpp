@@ -125,14 +125,6 @@ irr::video::E_POSTPROCESSING_EFFECT_QUALITY irr::video::CPostProcessingEffect::g
     return Quality;
 }
 
-irr::core::dimension2d<irr::u32> irr::video::CPostProcessingEffect::getQualityResolution() const
-{
-    if (CustomRTT)
-        return CustomRTT->getSize();
-    else
-        return Device->getVideoDriver()->getCurrentRenderTargetSize() / Quality;
-}
-
 irr::video::ITexture* irr::video::CPostProcessingEffect::getCustomRTT() const
 {
     return CustomRTT;

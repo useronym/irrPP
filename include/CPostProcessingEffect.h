@@ -84,8 +84,6 @@ class CPostProcessingEffect
 
         irr::video::E_POSTPROCESSING_EFFECT_QUALITY getQuality() const;
 
-        irr::core::dimension2d<irr::u32> getQualityResolution() const;
-
         irr::video::ITexture* getCustomRTT() const;
 
 

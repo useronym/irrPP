@@ -20,10 +20,11 @@ class IShaderDefaultPostProcessCallback : public irr::video::IShaderConstantSetC
     private:
         bool HaveIDs;
         irr::u32 NumTextures;
+        irr::core::vector2df PixelSize;
 
         irr::u32 RenderID;
         irr::u32 TexIDs[3];
-        irr::u32 PixelSizeXID, PixelSizeYID;
+        irr::u32 PixelSizeID;
 };
 
 }

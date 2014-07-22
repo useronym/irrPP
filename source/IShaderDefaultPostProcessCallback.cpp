@@ -13,11 +13,10 @@ void irr::video::IShaderDefaultPostProcessCallback::OnSetConstants(irr::video::I
     {
         RenderID = services->getPixelShaderConstantID("Render");
 
-        for (u32 i = 0; i < 3; i++)
+        for (u32 i = 0; i < 1; i++)
             TexIDs[i] = services->getPixelShaderConstantID((irr::core::stringc("Tex") + irr::core::stringc(i)).c_str());
 
-        PixelSizeXID = services->getPixelShaderConstantID("PixelSizeX");
-        PixelSizeYID = services->getPixelShaderConstantID("PixelSizeY");
+        PixelSizeID = services->getPixelShaderConstantID("PixelSize");
 
         HaveIDs = true;
     }
@@ -32,17 +31,16 @@ void irr::video::IShaderDefaultPostProcessCallback::OnSetConstants(irr::video::I
     }
 
     //some more useful stuff for post processing shaders
-    irr::core::dimension2du screensize= services->getVideoDriver()->getCurrentRenderTargetSize();
-    irr::f32 pixelSizeX= 1.0/screensize.Width;
-    irr::f32 pixelSizeY= 1.0/screensize.Height;
-    services->setPixelShaderConstant(PixelSizeXID, (irr::f32*)&pixelSizeX, 1);
-    services->setPixelShaderConstant(PixelSizeYID, (irr::f32*)&pixelSizeY, 1);
+    services->setPixelShaderConstant(PixelSizeID, (irr::f32*)&PixelSize, 2);
 }
 
 void irr::video::IShaderDefaultPostProcessCallback::OnSetMaterial (const SMaterial &material)
 {
+    irr::core::dimension2du tSize = material.getTexture(0)->getSize();
+    PixelSize = irr::core::vector2df(1.0 / tSize.Width, 1.0 / tSize.Height);
+
     NumTextures = 0;
-    for (u32 i = 1; i < 4; i++)
+    for (u32 i = 1; i <= 4; i++)
     {
         if (material.getTexture(i))
             NumTextures++;
