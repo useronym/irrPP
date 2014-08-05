@@ -82,19 +82,52 @@ irr::video::CPostProcessingEffect* irr::video::CPostProcessingEffectChain::creat
             effectName = "bloom_prepass";
             break;
 
-        case EPE_BLUR_V:
-            shaderSource = readShader("blur_v.frag");
-            effectName = "blur_v";
+        // low
+        case EPE_BLUR_V_LOW:
+            shaderSource = readShader("blur_v_low.frag");
+            effectName = "blur_v_low";
             break;
 
-        case EPE_BLUR_H:
-            shaderSource = readShader("blur_h.frag");
-            effectName = "blur_h";
+        case EPE_BLUR_H_LOW:
+            shaderSource = readShader("blur_h_low.frag");
+            effectName = "blur_h_low";
             break;
 
-        case EPE_BLUR_H_ADD:
-            shaderSource = readShader("blur_h_add.frag");
-            effectName = "blur_h_add";
+        case EPE_BLUR_H_ADD_LOW:
+            shaderSource = readShader("blur_h_add_low.frag");
+            effectName = "blur_h_add_low";
+            break;
+
+        // medium
+        case EPE_BLUR_V_MEDIUM:
+            shaderSource = readShader("blur_v_medium.frag");
+            effectName = "blur_v_medium";
+            break;
+
+        case EPE_BLUR_H_MEDIUM:
+            shaderSource = readShader("blur_h_medium.frag");
+            effectName = "blur_h_medium";
+            break;
+
+        case EPE_BLUR_H_ADD_MEDIUM:
+            shaderSource = readShader("blur_h_add_medium.frag");
+            effectName = "blur_h_add_medium";
+            break;
+
+        // high
+        case EPE_BLUR_V_HIGH:
+            shaderSource = readShader("blur_v_high.frag");
+            effectName = "blur_v_high";
+            break;
+
+        case EPE_BLUR_H_HIGH:
+            shaderSource = readShader("blur_h_high.frag");
+            effectName = "blur_h_high";
+            break;
+
+        case EPE_BLUR_H_ADD_HIGH:
+            shaderSource = readShader("blur_h_add_high.frag");
+            effectName = "blur_h_add_high";
             break;
 
         case EPE_COLD_COLORS:

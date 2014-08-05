@@ -24,12 +24,27 @@ enum E_POSTPROCESSING_EFFECT
 
     //! Only let bright areas of the render pass through
     EPE_BLOOM_PREPASS,
-    //! Blur render vertically
-    EPE_BLUR_V,
-    //! Blur render horizontally
-    EPE_BLUR_H,
-    //! Blur horizontally and add to a supplied texture (on index 0)
-    EPE_BLUR_H_ADD,
+
+    //! Blur render vertically, taking a sample of 5 pixels
+    EPE_BLUR_V_LOW,
+    //! Blur render horizontally, taking a sample of 5 pixels
+    EPE_BLUR_H_LOW,
+    //! Blur horizontally and add to a supplied texture (on index 0), taking a sample of 5 pixels
+    EPE_BLUR_H_ADD_LOW,
+
+    //! Blur render vertically, taking a sample of 13 pixels
+    EPE_BLUR_V_MEDIUM,
+    //! Blur render horizontally, taking a sample of 13 pixels
+    EPE_BLUR_H_MEDIUM,
+    //! Blur horizontally and add to a supplied texture (on index 0), taking a sample of 13 pixels
+    EPE_BLUR_H_ADD_MEDIUM,
+
+    //! Blur render vertically, taking a sample of (practically) 25 pixels (21, weights adjusted for 25)
+    EPE_BLUR_V_HIGH,
+    //! Blur render horizontally, taking a sample of (practically) 25 pixels (21, weights adjusted for 25)
+    EPE_BLUR_H_HIGH,
+    //! Blur horizontally and add to a supplied texture (on index 0), taking a sample of (practically) 25 pixels (21, weights adjusted for 25)
+    EPE_BLUR_H_ADD_HIGH,
 
     //! Pixel fog
     EPE_FOG,
