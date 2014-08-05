@@ -92,6 +92,8 @@ class CPostProcessingEffect
          * @param tex pointer to the texture to pass to the shader
          */
         void addTextureToShader(irr::video::ITexture* tex);
+
+        void removeTextureFromShader(irr::u32 index);
         /**
          * Gets the texture which should be passed to this shader on the given index.
          * @param index index of the texture, starting from 0

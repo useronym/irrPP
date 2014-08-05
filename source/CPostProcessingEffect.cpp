@@ -56,6 +56,11 @@ void irr::video::CPostProcessingEffect::addTextureToShader(irr::video::ITexture*
     TexturesToPass.push_back(tex);
 }
 
+void irr::video::CPostProcessingEffect::removeTextureFromShader(irr::u32 index)
+{
+    TexturesToPass.erase(index);
+}
+
 irr::video::ITexture* irr::video::CPostProcessingEffect::getTextureToPass(irr::u32 index) const
 {
     return TexturesToPass[index];
