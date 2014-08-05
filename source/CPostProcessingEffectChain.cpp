@@ -16,6 +16,9 @@ irr::video::CPostProcessingEffectChain::CPostProcessingEffectChain(irr::Irrlicht
 
 irr::video::CPostProcessingEffectChain::~CPostProcessingEffectChain()
 {
+    while (ActiveEffectCount > 0)
+        removeEffect(irr::u32(0));
+
     if(OriginalRender)
     {
         Device->getVideoDriver()->removeTexture(OriginalRender);

@@ -22,7 +22,11 @@ irr::video::irrPP::irrPP(irr::IrrlichtDevice* device, irr::video::E_POSTPROCESSI
 
 irr::video::irrPP::~irrPP()
 {
-    //dtor
+    while (Chains.size() > 0)
+    {
+        delete Chains[0];
+        Chains.erase(0);
+    }
 }
 
 void irr::video::irrPP::render(irr::video::ITexture* input, irr::video::ITexture* output)

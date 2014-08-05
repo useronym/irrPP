@@ -25,6 +25,12 @@ irr::video::CPostProcessingEffect::~CPostProcessingEffect()
     if (Chain)
         Chain->removeEffect(this);
 
+    if (CustomRTT)
+    {
+        Device->getVideoDriver()->removeTexture(CustomRTT);
+        CustomRTT = 0;
+    }
+
     delete Callback;
 }
 
